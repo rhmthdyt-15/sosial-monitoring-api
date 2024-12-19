@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
+        Schema::create('regions', function (Blueprint $table) {
+           $table->id();
             $table->string('name');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->enum('role', ['admin_pusat', 'pengguna_daerah']);
-            $table->json('wilayah')->nullable();
+            $table->enum('type', ['Provinsi', 'Kota', 'Kabupaten', 'Kecamatan']);
+            $table->unsignedBigInteger('parent_id')->nullable();
+            $table->unsignedBigInteger('external_id')->unique();
             $table->timestamps();
         });
     }
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('regions');
     }
 };
